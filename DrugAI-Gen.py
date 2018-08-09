@@ -19,13 +19,21 @@ np.random.seed(2017)
     
 ##time step addtition to feature 
 def dimX(x,ts):
-    x=np.asarray(x)
-    newX=[]
-    for i, c in enumerate(x):
-        newX.append([])
-        for j in range(ts):
-            newX[i].append(c)
-    return np.array(newX)
+    # Simple way to expand dimmension
+    # x.shape = (batch_size, num_feature)
+    batch_size, num_feature = x.shape
+    x = np.expand_dim(x, axis=1)
+    x = np.repeat(x, repeats = ts, axis = 1)
+    # x.shape = (batch_size, timestep, num_feature)
+    assert x.shape == (batch_size, ts, num_feature)
+    return
+    #x=np.asarray(x)
+    #newX=[]
+    #for i, c in enumerate(x):
+    #    newX.append([])
+    #    for j in range(ts):
+    #        newX[i].append(c)
+    #return np.array(newX)
 
 ##time step addtition to target
 def dimY(Y,ts):
